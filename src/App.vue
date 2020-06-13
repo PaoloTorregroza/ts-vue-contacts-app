@@ -1,67 +1,59 @@
 <template>
   <v-app>
-    <v-app-bar app clipped-left>
-      <v-toolbar-title>Contacts app</v-toolbar-title>
+    <v-app-bar id="nav" app clipped-left>
+      <v-toolbar-title>
+        <router-link to="/">
+          Contacts app
+        </router-link>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="toolbar-option"><a>Login</a></v-toolbar-title>
-      <v-toolbar-title class="toolbar-option"><a>Register</a></v-toolbar-title>
+      <v-toolbar-title class="toolbar-option">
+        <router-link to="/login">Login</router-link>
+      </v-toolbar-title>
+      <v-toolbar-title class="toolbar-option">
+        <router-link to="/register">Register</router-link>
+      </v-toolbar-title>
     </v-app-bar>
-    
-    <v-main>
-      <v-card id="main-container">
-        <v-card-title>Your contacts</v-card-title>
-        <div class="contact-container">
-          <Contact />
-          <Contact />
-          <Contact />
-          <Contact />
-          <Contact />
-          <Contact />
-          <Contact />
-        </div>
-      </v-card>
-    </v-main>
+
+    <router-view></router-view>
 
     <v-footer app>
-        <span>&copy; 2020</span>
+      <span>&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Contact from "./components/Contact.vue";
+  import Vue from 'vue';
 
-export default Vue.extend(
-{
-  name: 'App',
+  export default Vue.extend(
+  {
+    name: 'App',
+    created() {
+      this.$vuetify.theme.dark = true;
+    }
 
-  components: {
-    Contact,
-  },
-  created() {
-    this.$vuetify.theme.dark = true;
-  }
-
-});
+  });
 </script>
 
-<style>
-#main-container {
-  padding: 1% 4.5%;
-  margin: 20px 10% 5% 10%;
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.contact-container {
-  display: flex;
-  flex-wrap: wrap;
-}
+#nav {
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
 
-.toolbar-option {
-  margin-right: 1%;
-  font-weight: lighter;
+    &.router-link-active {
+      text-decoration: underline;
+    }
+  }
 }
 </style>
-
-
-  

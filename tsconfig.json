@@ -10,7 +10,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "typeRoots": [
+      "node_modules/@types/",
+      "src/@types/"
+    ],
     "types": [
       "vuetify",
       "webpack-env"

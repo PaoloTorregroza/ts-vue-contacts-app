@@ -21,6 +21,7 @@
 <script lang="ts">
     import {Vue, Component } from 'vue-property-decorator';
     import {requiredRule, emailRule} from '../utils/form-rules';
+    import axios from "axios";
 
     interface Form extends FormDefinition {
         valid: boolean;
@@ -56,6 +57,19 @@
                 password: [
                     requiredRule()
                 ]
+            }
+        }
+        async onSubmit() {
+            const queryData = {
+                email: this.form.fields.email,
+                password: this.form.fields.password,
+                name: this.form.fields.name
+            }
+            try {
+                await axios.post('http://localhost:4000/auth/register', queryData);
+                await this.$router.push("/login");
+            } catch (e) {
+                console.log(e);
             }
         }
     }

@@ -7,12 +7,15 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="toolbar-option">
-        <router-link to="/login">Login</router-link>
-      </v-toolbar-title>
-      <v-toolbar-title class="toolbar-option">
-        <router-link to="/register">Register</router-link>
-      </v-toolbar-title>
+        <v-toolbar-title v-if="!logged" class="toolbar-option">
+          <router-link to="/login">Login</router-link>
+        </v-toolbar-title>
+        <v-toolbar-title v-if="!logged" class="toolbar-option">
+          <router-link to="/register">Register</router-link>
+        </v-toolbar-title>
+        <v-toolbar-title v-if="logged" class="toolbar-option">
+          <a @click="logout" href="/">Logout</a>
+        </v-toolbar-title>
     </v-app-bar>
 
     <router-view></router-view>
@@ -29,10 +32,26 @@
   export default Vue.extend(
   {
     name: 'App',
+    data() {
+      return {
+        logged: false
+      }
+    },
+    methods: {
+      logout() {
+        console.log("Logged out")
+        localStorage.clear();
+      }
+    },
     created() {
       this.$vuetify.theme.dark = true;
+      if (localStorage.getItem('token')) {
+        Vue.prototype.$logged = true;
+      } else {
+        Vue.prototype.$logged = false;
+      }
+      this.logged = Vue.prototype.$logged;
     }
-
   });
 </script>
 
@@ -55,5 +74,10 @@
       text-decoration: underline;
     }
   }
+}
+
+.toolbar-option {
+  margin-right: 1%;
+  font-weight: lighter;
 }
 </style>
